@@ -1,0 +1,77 @@
+# To enable ProGuard in your project, edit project.properties
+# to define the proguard.config property as described in that file.
+#
+# Add project specific ProGuard rules here.
+# By default, the flags in this file are appended to flags specified
+# in ${sdk.dir}/tools/proguard/proguard-android.txt
+# You can edit the include path and order by changing the ProGuard
+# include property in project.properties.
+#
+# For more details, see
+#   http://developer.android.com/guide/developing/tools/proguard.html
+
+# Add any project specific keep options here:
+
+# If your project uses WebView with JS, uncomment the following
+# and specify the fully qualified class name to the JavaScript interface
+# class:
+#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+#   public *;
+#}
+-injars volley-android.jar
+-outjars volley-android-pro.jar
+
+-libraryjars 'D:\Program Files (x86)\java\jdk1.7\jre\lib\rt.jar'
+
+-target 1.7
+-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
+-dontusemixedcaseclassnames
+-keepattributes Signature
+-renamesourcefileattribute SourceFile
+-adaptresourcefilenames **.properties
+-adaptresourcefilecontents **.properties,META-INF/MANIFEST.MF
+-verbose
+-dontwarn android.annotation,com.android.volley
+-ignorewarnings
+-keepattributes Signature,InnerClasses   #不优化泛型和反射,内部类
+
+
+# Keep - Library. Keep all public and protected classes, fields, and methods.
+-keep public class * {
+    public protected <fields>;
+    public protected <methods>;
+}
+
+# Also keep - Enumerations. Keep the special static methods that are required in
+# enumeration classes.
+-keepclassmembers enum  * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+# Also keep - Serialization code. Keep all fields and methods that are used for
+# serialization.
+-keepclassmembers class * extends java.io.Serializable {
+    static final long serialVersionUID;
+    static final java.io.ObjectStreamField[] serialPersistentFields;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}
+
+# Also keep - Bean classes. Keep all specified classes, along with their getters
+# and setters.
+-keep class * {
+    void set*(***);
+    void set*(int,***);
+    boolean is*();
+    boolean is*(int);
+    *** get*();
+    *** get*(int);
+}
+
+# Keep names - Native method names. Keep all native class/method names.
+-keepclasseswithmembers,allowshrinking class * {
+    native <methods>;
+}
